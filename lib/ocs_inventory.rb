@@ -23,16 +23,14 @@ class OcsInventory
     end
   end
 
-  def self.get_license(interval)
+# Types:
+#  1 - Windows KEY
+#  2 - Microfoft Office
+
+  def self.get_license(type,interval)
     begin
       results = @db.query "select NAME,LASTCOME,WINOWNER,OSNAME,WINPRODKEY from hardware where LASTCOME > TIMESTAMP(DATE_SUB(NOW(), INTERVAL #{interval} day))"
-      #puts "Number of licenses #{results.num_rows}"
       return results
-      #results.each_hash do |row|
-        #return row
-        #puts "Name: #{row.NAME} : #{row.LASTCOME} : #{row.OSNAME} : #{row.WINPRODKEY}"
-      #end
-      results.free
     ensure
       @db.close
     end
